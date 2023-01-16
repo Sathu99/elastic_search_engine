@@ -1,0 +1,92 @@
+{
+  "settings": {
+    "index": {
+      "analysis": {
+        "analyzer": {
+          "plain": {
+            "filter": [],
+            "tokenizer": "standard"
+          },
+          "my_custom_analyzer": {
+            "type": "custom",
+            "tokenizer": "standard",
+            "filter": ["custom_stopper", "custom_stemmer", "custom_synonyms"]
+          },
+          "inflections": {
+            "filter": ["custom_stemmer"],
+            "tokenizer": "standard"
+          }
+        },
+        "filter": {
+          "custom_stopper": {
+            "type": "stop",
+            "stopwords_path": "analyze/stopwords.txt"
+          },
+          "custom_stemmer": {
+            "type": "stemmer",
+            "rules_path": "analyze/stem.txt"
+          },
+          "custom_synonyms": {
+            "type": "synonym",
+            "synonyms_path": "analyze/synonym.txt"
+          }
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "பாடல்": {
+        "type": "text",
+        "analyzer": "plain",
+        "fields": {
+          "inflections": {
+            "type": "text",
+            "analyzer": "inflections"
+          }
+        }
+      },
+      "பாடல்வரிகள்": {
+        "type": "text",
+        "analyzer": "my_custom_analyzer",
+        "fields": {
+          "inflections": {
+            "type": "text",
+            "analyzer": "inflections"
+          }
+        }
+      },
+      "வருடம்": {
+        "type": "integer"
+      },
+      "படம்": {
+        "type": "keyword"
+      },
+      "உவமானம்": {
+        "type": "text"
+      },
+      "உவமேயம்": {
+        "type": "text"
+      },
+      "இசையமைப்பாளர்": {
+        "type": "keyword"
+      },
+      "பாடலாசிரியர்": {
+        "type": "text"
+      },
+      "பாடகர்கள்": {
+        "type": "text"
+      },
+      "உருவகம்": {
+        "type": "text",
+        "analyzer": "my_custom_analyzer",
+        "fields": {
+          "inflections": {
+            "type": "text",
+            "analyzer": "inflections"
+          }
+        }
+      }
+    }
+  }
+}
