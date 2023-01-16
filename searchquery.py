@@ -13,4 +13,5 @@ def search(query):
     query_body = basic_search(query)
     print('Making Basic Search ')
     res = client.search(index=INDEX, body=query_body)
+    
     return res
