@@ -975,7 +975,6 @@ legend {
   display: block;
   margin-bottom: 26px;
   font-weight: bold;
-  text-align: center;
 }
 
 .s009 form .inner-form .advance-search .row {
@@ -1017,9 +1016,16 @@ legend {
   justify-content: flex-start;
   -ms-flex-align: center;
   align-items: center;
-  /* width: 110px; */
   color: #666;
   font-size: 16px;
+}
+
+.s009 form .inner-form .advance-search .row.third .input-field > div:first-child {
+  max-width: 60%;
+  overflow:hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display:inline-block;
 }
 
 .s009 form .inner-form .advance-search .row.third .input-field .result-count.initmsg {

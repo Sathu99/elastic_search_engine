@@ -1,139 +1,188 @@
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="colorlib.com" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,600,700" rel="stylesheet" />
+    <link href="static/styles/index_main.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="static/styles/style.css" />
+    <link rel="stylesheet" href="static/styles/select.css" />
+  </head>
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="author" content="colorlib.com">
-  <link href="https://fonts.googleapis.com/css?family=Lato:400,600,700" rel="stylesheet" />
-  <link href="static/styles/index_main.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="static/styles/style.css">
-</head>
-
-<body>
-  <div class="s009">
-    <form action="http://127.0.0.1:5000/search" method="post">
-      <div class="inner-form">
-        <div class="basic-search">
-          <div class="input-field">
-            <input id="searchTerm" type="text" name="searchTerm" placeholder="Type Keywords" />
-            <div class="icon-wrap">
-              <svg class="svg-inline--fa fa-search fa-w-16" fill="#ccc" aria-hidden="true" data-prefix="fas"
-                data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <path
-                  d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z">
-                </path>
-              </svg>
-            </div>
-          </div>
-        </div>
-        <div class="advance-search">
-          <span class="desc">ADVANCED SEARCH</span>
-          <div class="row">
-            <label class="checkbox-wrap checkbox-primary">பாடல்வரிகள்
-              <input type="checkbox" name="பாடல்வரிகள்" value="பாடல்வரிகள்">
-              <span class="checkmark"></span>
-            </label>
-            <label class="checkbox-wrap checkbox-primary">பாடலாசிரியர்
-              <input type="checkbox" name="பாடலாசிரியர்" value="பாடலாசிரியர்">
-              <span class="checkmark"></span>
-            </label>
-            <label class="checkbox-wrap checkbox-primary">பாடகர்கள்
-              <input type="checkbox" name="பாடகர்கள்" value="பாடகர்கள்">
-              <span class="checkmark"></span>
-            </label>
-          </div>
-          <div class="row second">
-            <label class="checkbox-wrap checkbox-primary">உருவகம்
-              <input type="checkbox" name="உருவகம்" value="உருவகம்">
-              <span class="checkmark"></span>
-            </label>
-            <label class="checkbox-wrap checkbox-primary">உவமேயம்
-              <input type="checkbox" name="உவமேயம்" value="உவமேயம்">
-              <span class="checkmark"></span>
-            </label>
-            <label class="checkbox-wrap checkbox-primary">உவமானம்
-              <input type="checkbox" name="உவமானம்" value="உவமானம்">
-              <span class="checkmark"></span>
-            </label>
-          </div>
-          <div class="row third">
+  <body>
+    <div class="s009">
+      <form action="http://127.0.0.1:5000/search" method="post">
+        <div class="inner-form">
+          <div class="basic-search">
             <div class="input-field">
-              {% if hits %}
-              <div class="result-count">
-                <span>{{ num_results }}</span> results were found
-                for&nbsp;<strong class="text-info">{{ query }}</strong>
+              <input id="searchTerm" type="text" name="searchTerm" placeholder="Type Query" />
+              <div class="icon-wrap">
+                <svg
+                  class="svg-inline--fa fa-search fa-w-16"
+                  fill="#ccc"
+                  aria-hidden="true"
+                  data-prefix="fas"
+                  data-icon="search"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                  ></path>
+                </svg>
               </div>
-              {% else %}
-              {% if init %}
-              <div class="result-count initmsg">
-                Enter the search query in the box
+            </div>
+          </div>
+          <div class="advance-search">
+            <div class="row">
+              <span class="desc">ADVANCED SEARCH</span>
+              <div class="row justify-content-center">
+                <div class="d-flex justify-content-center align-items-center">
+                  <div class="d-flex text-center align-items-center w-100">
+                    <strong class="text-primary sl">Operator: </strong>
+                    <select class="custom-select" id="operator" name="operator">
+                      <option value="not" selected>Nothing</option>
+                      <option value="or" selected>OR</option>
+                      <option value="and">AND</option>
+                    </select>
+                  </div>
+                </div>
               </div>
-              {% else %}
-              <div class="result-count">
-                No results were found for &nbsp;
-                <strong class="text-danger">{{ query }}</strong>
-              </div>
-              {% endif %}
-              {% endif %}
-              <div class="group-btn">
-                <button class="btn-delete" id="delete">RESET</button>
-                <button class="btn-search">SEARCH</button>
+            </div>
+            <div class="row">
+              <label class="checkbox-wrap checkbox-primary"
+                >பாடல்வரிகள்
+                <input type="checkbox" name="பாடல்வரிகள்" value="பாடல்வரிகள்" />
+                <span class="checkmark"></span>
+              </label>
+              <label class="checkbox-wrap checkbox-primary"
+                >பாடலாசிரியர்
+                <input type="checkbox" name="பாடலாசிரியர்" value="பாடலாசிரியர்" />
+                <span class="checkmark"></span>
+              </label>
+              <label class="checkbox-wrap checkbox-primary"
+                >பாடகர்கள்
+                <input type="checkbox" name="பாடகர்கள்" value="பாடகர்கள்" />
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <div class="row second">
+              <label class="checkbox-wrap checkbox-primary"
+                >உருவகம்
+                <input type="checkbox" name="உருவகம்" value="உருவகம்" />
+                <span class="checkmark"></span>
+              </label>
+              <label class="checkbox-wrap checkbox-primary"
+                >உவமேயம்
+                <input type="checkbox" name="உவமேயம்" value="உவமேயம்" />
+                <span class="checkmark"></span>
+              </label>
+              <label class="checkbox-wrap checkbox-primary"
+                >உவமானம்
+                <input type="checkbox" name="உவமானம்" value="உவமானம்" />
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <div class="row third">
+              <div class="input-field">
+                {% if hits %}
+                <div class="result-count">
+                  <span>{{ num_results }}</span> results were found for&nbsp;<strong class="text-info"
+                    >{{ query }}</strong
+                  >
+                </div>
+                {% else %} {% if init %}
+                <div class="result-count initmsg">Enter Your Search Query in the Box</div>
+                {% else %}
+                <div class="result-count">
+                  No results were found for &nbsp;
+                  <strong class="text-danger">{{ query }}</strong>
+                </div>
+                {% endif %} {% endif %}
+                <div class="group-btn">
+                  <button class="btn-delete" id="delete">RESET</button>
+                  <button class="btn-search">SEARCH</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </form>
-  </div>
-  {% if hits %}
-  <section id='song_section' class="ftco-section">
-    <div class="avl-recs">
-      <h2 class="text-success">Available Records</h2>
+      </form>
     </div>
-    <div class="container">
-      {% for hit in hits %}
-      <div class="records">
-        <ul>
-          <li>
-            <ul class="song">
-              <li><span>
-                  <strong style="font-weight: bolder;font-size: 1.4em;" class="text-info">{{ hit._source.பாடல்
-                    }}</strong>
-                </span></li>
-            </ul>
-          </li>
-          <li>
-            <ul class="song-data">
-              <li> <span><strong class="text-dark">Album Title:</strong> {{ hit._source.படம் }}</span></li>
-              <li> <span><strong class="text-dark">Lyricist:</strong> {{ hit._source.பாடலாசிரியர்}}</span></li>
-              <li> <span><strong class="text-dark">Singers:</strong> {{ hit._source.பாடகர்கள்}}</span></li>
-              <li> <span><strong class="text-dark">Year:</strong> {{ hit._source.வருடம் }} </span></li>
-              <li> <span><strong class="text-dark">Metaphor: </strong>{{ hit._source.உருவகம் }}</span></li>
-              <li> <span><strong class="text-dark">Source Domain:</strong> {{ hit._source.உவமானம்}}</span></li>
-              <li> <span><strong class="text-dark">Target Domain:</strong> {{ hit._source.உவமேயம்}}</span></li>
-              <li> <span><strong class="text-dark">Lyrics:</strong> {{ hit._source.பாடல்வரிகள்}}</span></li>
-            </ul>
-          </li>
-        </ul>
+    {% if hits %}
+    <section id="song_section" class="ftco-section">
+      <div class="avl-recs">
+        <h2 class="text-success">Available Records</h2>
       </div>
-      {% endfor %}
-    </div>
-  </section>
-  {% endif %}
-  <script src="js/extention/choices.js"></script>
-  <script>
-    const allCheckboxes = document.querySelectorAll("input[type='checkbox']");
-    const deleteBtn = document.getElementById('delete')
+      <div class="container">
+        {% for hit in hits %}
+        <div class="records">
+          <ul>
+            <li>
+              <ul class="song">
+                <li>
+                  <span>
+                    <strong style="font-weight: bolder; font-size: 1.4em" class="text-info"
+                      >{{ hit._source.பாடல் }}</strong
+                    >
+                  </span>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <ul class="song-data">
+                <li>
+                  <span><strong class="text-dark">Album Title:</strong> {{ hit._source.படம் }}</span>
+                </li>
+                <li>
+                  <span><strong class="text-dark">Lyricist:</strong> {{ hit._source.பாடலாசிரியர்}}</span>
+                </li>
+                <li>
+                  <span><strong class="text-dark">Singers:</strong> {{ hit._source.பாடகர்கள்}}</span>
+                </li>
+                <li>
+                  <span><strong class="text-dark">Year:</strong> {{ hit._source.வருடம் }} </span>
+                </li>
+                <li>
+                  <span><strong class="text-dark">Metaphor: </strong>{{ hit._source.உருவகம் }}</span>
+                </li>
+                <li>
+                  <span><strong class="text-dark">Source Domain:</strong> {{ hit._source.உவமானம்}}</span>
+                </li>
+                <li>
+                  <span><strong class="text-dark">Target Domain:</strong> {{ hit._source.உவமேயம்}}</span>
+                </li>
+                <li>
+                  <span><strong class="text-dark">Lyrics:</strong> {{ hit._source.பாடல்வரிகள்}}</span>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
 
-    deleteBtn.addEventListener("click", function (e) {
-      e.preventDefault()
-      for (var i = 0; i < allCheckboxes.length; ++i) { allCheckboxes[i].checked = false; }
-    });
+    <script src="static/js/extention/choices.js"></script>
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/popper.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/main.js"></script>
+    <script>
+      const allCheckboxes = document.querySelectorAll("input[type='checkbox']");
+      const deleteBtn = document.getElementById("delete");
 
-  </script>
-</body>
-
+      deleteBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        for (var i = 0; i < allCheckboxes.length; ++i) {
+          allCheckboxes[i].checked = false;
+        }
+      });
+    </script>
+  </body>
 </html>

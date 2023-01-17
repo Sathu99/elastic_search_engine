@@ -1,58 +1,52 @@
 import json
 
-def standard_analyzer(query):
+
+def basic_search(query, operator="or"):
     q = {
-        "analyzer": "standard",
-        "text": query
+        "query": {"query_string": {"query": query, "default_operator": operator}},
     }
     return q
 
 
-def basic_search(query):
+def wildcard_search(query, fields):
     q = {
         "query": {
-            "query_string": {
-                "query": query
-            }
-        },
-        "highlight": {
-            "fields": {
-                "பாடல்வரிகள்": {}
-            },
-            "pre_tags" : "<i>",
-            "post_tags" : "</i>"
-        },
-        "size": 150
-    }
-    return q
-
-
-def search_with_field(query, field):
-    q = {
-        "query": {
-            "match": {
-                [field]: query
+            "bool": {
+                "should": [
+                    {"wildcard": {f"{field}": {"value": query}}} for field in fields
+                ],
+                "minimum_should_match": 1,
+                "boost": 1.0,
             }
         }
     }
     return q
 
 
-def multi_match(query, fields=[], operator='or'):
+def search_with_fields(query, fields):
+    q = {
+        "query": {
+            "bool": {"must": [{"match": {f"{field}": query}} for field in fields]}
+        }
+    }
+    return q
+
+
+def multi_match(query, fields, operator="or"):
     q = {
         "query": {
             "multi_match": {
                 "query": query,
-                "fields": fields,
+                "fields": [f"{field}.custom" for field in fields],
                 "operator": operator,
-                "type": "best_fields"
+                "type": "best_fields",
             }
-        }
+        },
     }
     return q
 
 
-def agg_multi_match_q(query, fields=['title', 'song_lyrics'], operator='or'):
+def agg_multi_match_q(query, fields=["title", "song_lyrics"], operator="or"):
     q = {
         "size": 500,
         "explain": True,
@@ -61,35 +55,15 @@ def agg_multi_match_q(query, fields=['title', 'song_lyrics'], operator='or'):
                 "query": query,
                 "fields": fields,
                 "operator": operator,
-                "type": "best_fields"
+                "type": "best_fields",
             }
         },
         "aggs": {
-            "Genre Filter": {
-                "terms": {
-                    "field": "genre.keyword",
-                    "size": 10
-                }
-            },
-            "Music Filter": {
-                "terms": {
-                    "field": "music.keyword",
-                    "size": 10
-                }
-            },
-            "Artist Filter": {
-                "terms": {
-                    "field": "artist.keyword",
-                    "size": 10
-                }
-            },
-            "Lyrics Filter": {
-                "terms": {
-                    "field": "lyrics.keyword",
-                    "size": 10
-                }
-            }
-        }
+            "Genre Filter": {"terms": {"field": "genre.keyword", "size": 10}},
+            "Music Filter": {"terms": {"field": "music.keyword", "size": 10}},
+            "Artist Filter": {"terms": {"field": "artist.keyword", "size": 10}},
+            "Lyrics Filter": {"terms": {"field": "lyrics.keyword", "size": 10}},
+        },
     }
 
     q = json.dumps(q)
@@ -99,23 +73,16 @@ def agg_multi_match_q(query, fields=['title', 'song_lyrics'], operator='or'):
 def agg_q():
     q = {
         "size": 0,
-        "aggs": {
-            "Category Filter": {
-                "terms": {
-                    "field": "genre",
-                    "size": 10
-                }
-            }
-        }
+        "aggs": {"Category Filter": {"terms": {"field": "genre", "size": 10}}},
     }
 
     return q
 
 
-def agg_multi_match_and_sort_q(query, fields, operator='or',sort_num=10):
+def agg_multi_match_and_sort_q(query, fields, operator="or", sort_num=10):
     print(fields)
     print(query)
-    print('sort num is ', sort_num)
+    print("sort num is ", sort_num)
     q = {
         "size": sort_num,
         "sort": [
@@ -126,35 +93,15 @@ def agg_multi_match_and_sort_q(query, fields, operator='or',sort_num=10):
                 "query": query,
                 "fields": fields,
                 "operator": operator,
-                "type": "best_fields"
+                "type": "best_fields",
             }
         },
         "aggs": {
-            "Genre Filter": {
-                "terms": {
-                    "field": "வகை.keyword",
-                    "size": 10
-                }
-            },
-            "Music Filter": {
-                "terms": {
-                    "field": "இசையமைப்பாளர்.keyword",
-                    "size": 10
-                }
-            },
-            "Artist Filter": {
-                "terms": {
-                    "field": "பாடியவர்கள்.keyword",
-                    "size": 10
-                }
-            },
-            "Lyrics Filter": {
-                "terms": {
-                    "field": "பாடல்வரிகள்.keyword",
-                    "size": 10
-                }
-            }
-        }
+            "Genre Filter": {"terms": {"field": "வகை.keyword", "size": 10}},
+            "Music Filter": {"terms": {"field": "இசையமைப்பாளர்.keyword", "size": 10}},
+            "Artist Filter": {"terms": {"field": "பாடியவர்கள்.keyword", "size": 10}},
+            "Lyrics Filter": {"terms": {"field": "பாடல்வரிகள்.keyword", "size": 10}},
+        },
     }
     q = json.dumps(q)
     return q
