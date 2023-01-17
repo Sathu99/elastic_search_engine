@@ -38,7 +38,7 @@ def search_with_field(query, field):
     return q
 
 
-def multi_match(query, fields=['title', 'song_lyrics'], operator='or'):
+def multi_match(query, fields=[], operator='or'):
     q = {
         "query": {
             "multi_match": {

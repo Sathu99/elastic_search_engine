@@ -11,16 +11,17 @@ def index():
 def ui_search():
     if request.method == 'POST':
         query = request.form['searchTerm']
-        res = search(query)
+        fields = list(request.form.keys())
+        fields.remove('searchTerm')
+        res = search(query, fields)
         hits = res['hits']['hits']
         time = res['took']
-        # aggs = res['aggregations']
         num_results =  res['hits']['total']['value']
         
-        return render_template('result.html', query=query, hits=hits, num_results=num_results,time=time)
+        return render_template('index.html', query=query, hits=hits, num_results=num_results,time=time)
 
     else:
-        return render_template('result.html', init='True')
+        return render_template('index.html', init='True')
 
 @app.errorhandler(404)
 def page_not_found(e):
