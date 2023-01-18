@@ -9,6 +9,15 @@ load_dotenv()
 client = Elasticsearch(hosts=["http://localhost"], http_auth=("elastic", os.getenv('ELASTCSEARCH_PASSWORD')), port=os.getenv('ELASTCSEARCH_PORT'))
 INDEX = os.getenv('ELASTCSEARCH_INDEX')
 
+def deleteIndex():
+    # check if index exists
+    if client.indices.exists(index=INDEX):
+        # delete index
+        client.indices.delete(index=INDEX)
+        print(f"Index {INDEX} deleted successfully.")
+    else:
+        print(f"Index {INDEX} does not exist.")
+
 # Creating index if not manually created
 def createIndex():
     # Create an index
@@ -68,7 +77,12 @@ def genData(song_array):
                 "உவமேயம்": target
             },
         }
-
+        
+# Delete Index if it exists
+deleteIndex()
+# Create new index
 createIndex()
+#Read all Songs as List of Objects
 all_songs = read_all_songs()
+#Push All Docs to Index
 helpers.bulk(client, genData(all_songs))

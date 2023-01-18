@@ -25,9 +25,8 @@ def search(query, fields, operator="or"):
     else:
         query_body = multi_match(query, fields, "or" if operator == "not" else operator)
 
-    query_body['size'] = 150
-    print("Making Basic Search...", query_body)
+    print("Query Processing...", query_body)
 
-    res = client.search(index=INDEX, body=query_body)
+    res = client.search(index=INDEX, body=query_body, size=120)
 
     return res

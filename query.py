@@ -26,7 +26,7 @@ def wildcard_search(query, fields):
 def search_with_fields(query, fields):
     q = {
         "query": {
-            "bool": {"must": [{"match": {f"{field}": query}} for field in fields]}
+            "bool": {"must": [{"match": {f"{field}.custom": query}} for field in fields]}
         }
     }
     return q
