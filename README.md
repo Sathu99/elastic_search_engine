@@ -8,11 +8,8 @@ The reason to choose the website
 - Expected fields present
 - Especially, huge data with lyrics in Tamil
 
-# Directory Structure
-
-
 # Data JSON Structure
-##### Every Modified data JSON file has fields of
+#### Every Modified data JSON file has fields of
 1. "படம்"
 2. "பாடல்"
 3. "பாடலாசிரியர்"
@@ -26,12 +23,18 @@ The reason to choose the website
 
 # Setup
 * Install ElasticSearch on Your local Machne
-* Run ElasticSearch on local by `elasticsearch` on command line
-* Run `pip install requirements.txt`
-* Run the [bulkdata.py](bulkdata.py) to Create the index and Add Data to Elastic cluster
+* Run ElasticSearch on local by type `elasticsearch` on command line
+* Run `pip install requirements.txt` to install libraries
 * Run the [app.py](app.py) to deploy the application
 * Go to [http://localhost:5000/search](http://localhost:5000)
 * Type some queries and search
 
 # Sample Queries
-+ 
+* அழகு
+* அழகே
+* நெஞ்சு
+* நெஞ்சு*
+* *நெஞ்சு
+* நெஞ்சு*
+* இதழ்களை நுகர்ந்துவிட
+* கொள்ளையிட்டு போகும் அழகே
