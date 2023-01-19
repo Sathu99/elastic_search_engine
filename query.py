@@ -1,10 +1,30 @@
 import json
 
+analyzedFields = ["உருவகம்", "பாடல்வரிகள்", "பாடல்"]
+
 
 def basic_search(query, operator="or"):
-    q = {
-        "query": {"query_string": {"query": query, "default_operator": operator}},
-    }
+    if operator == "not":
+        q = {
+            "query": {
+                "query_string": {
+                    "query": f"\"{query}\"",
+                    "default_field": "*",
+                    "analyzer": "keyword",
+                }
+            }
+        }
+    else:
+        q = {
+            "query": {
+                "query_string": {
+                    "query": query,
+                    "default_operator": operator,
+                    "analyzer": "plain",
+                    "default_field": "*",
+                }
+            },
+        }
     return q
 
 
@@ -26,7 +46,16 @@ def wildcard_search(query, fields):
 def search_with_fields(query, fields):
     q = {
         "query": {
-            "bool": {"must": [{"match": {f"{field}.custom": query}} for field in fields]}
+            "bool": {
+                "must": [
+                    {
+                        "match": {
+                            f"{field}{'.custom' if field in analyzedFields else ''}": query
+                        }
+                    }
+                    for field in fields
+                ]
+            }
         }
     }
     return q
@@ -37,7 +66,10 @@ def multi_match(query, fields, operator="or"):
         "query": {
             "multi_match": {
                 "query": query,
-                "fields": [f"{field}.custom" for field in fields],
+                "fields": [
+                    f"{field}{'.custom' if field in analyzedFields else ''}"
+                    for field in fields
+                ],
                 "operator": operator,
                 "type": "best_fields",
             }

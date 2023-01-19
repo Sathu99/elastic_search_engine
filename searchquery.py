@@ -17,7 +17,7 @@ INDEX = os.getenv("ELASTCSEARCH_INDEX")
 
 def search(query, fields, operator="or"):
     if len(fields) == 0:
-        query_body = basic_search(query, "or" if operator == "not" else operator)
+        query_body = basic_search(query, operator)
     elif re.search(r"[^.]\*", query) and len(fields) != 0:
         query_body = wildcard_search(query, fields)
     elif len(fields) > 0 and operator == "not":
